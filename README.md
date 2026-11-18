@@ -43,7 +43,8 @@ capstone-1-mariadb/
 └── starter/
     └── sql/
         ├── 01_returning.sql
-        └── 02_uuid_comparison.sql
+        ├── 02_uuid_comparison.sql
+        └── 03_uuid_benchmark.sql
 ```
 
 The SQL scripts create their own demonstration tables and insert sample data.
@@ -66,6 +67,7 @@ The SQL scripts create their own demonstration tables and insert sample data.
 6. Execute the complete SQL script.
 7. Examine the returned results.
 8. Repeat with `starter/sql/02_uuid_comparison.sql`.
+9. starter/sql/03_uuid_benchmark.sql
 
 Both scripts create the database `capstone_starter` if it does not exist.
 
@@ -206,7 +208,7 @@ Both approaches returned the UUID in a readable textual form.
 ### 6.7 Limitations
 
 - The experiment uses only a small amount of generated data.
-- Actual table and index disk usage has not been benchmarked.
+- Allocated InnoDB storage was measured using a 10,000-record benchmark. Exact physical disk usage and query execution performance were not measured.
 - The results do not establish that native UUID queries execute faster.
 - `LENGTH()` applied to the UUID's textual representation does not measure its native physical storage.
 - Native UUID storage is appropriate when the values are genuinely UUID identifiers; ordinary character columns remain appropriate for general text.
