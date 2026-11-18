@@ -1,3 +1,8 @@
+-- Capstone Project I
+-- UUID storage benchmark
+-- MariaDB Server 11.8.10
+
+CREATE DATABASE IF NOT EXISTS capstone_starter;
 USE capstone_starter;
 
 -- Remove the previous benchmark tables
