@@ -13,8 +13,8 @@ In progress — initial setup.
 ## Environment
 
 - Operating system: Windows
-- Database: MariaDB (version to be confirmed)
-
+- Database: MariaDB Server 11.8.10
+- SQL client: HeidiSQL
 ## Setup Instructions
 
 To be added after the development environment has been configured.
