@@ -210,7 +210,46 @@ Both approaches returned the UUID in a readable textual form.
 - The results do not establish that native UUID queries execute faster.
 - `LENGTH()` applied to the UUID's textual representation does not measure its native physical storage.
 - Native UUID storage is appropriate when the values are genuinely UUID identifiers; ordinary character columns remain appropriate for general text.
+## UUID Storage Benchmark
 
+### Objective
+
+Compare the reported allocated InnoDB storage for 10,000 records using `CHAR(36)` and MariaDB's native `UUID` data type.
+
+### Methodology
+
+Two InnoDB tables were created with identical schemas except for the primary-key data type.
+
+A dataset of 10,000 generated UUIDs and student names was inserted into both tables.
+
+After loading the data, `ANALYZE TABLE` was executed. Storage statistics were retrieved from `information_schema.TABLES` using `DATA_LENGTH + INDEX_LENGTH`.
+
+The experiment was repeated with a newly generated dataset.
+
+### Results
+
+| Storage method | Run 1 | Run 2 |
+|---|---:|---:|
+| Native UUID | 528 KB | 528 KB |
+| CHAR(36) | 1,552 KB | 1,552 KB |
+
+Both tables contained 10,000 records in each run.
+
+In these experiments, the native UUID table used approximately **66% less reported allocated storage** than the character-based table.
+
+### Interpretation
+
+The results demonstrate that MariaDB's native UUID representation can reduce storage requirements for this particular schema and dataset.
+
+However, InnoDB storage statistics reflect allocated index pages and database overhead rather than only the raw UUID values.
+
+The measurements do not establish that UUID queries execute faster, nor do they guarantee the same percentage reduction for larger datasets or different workloads.
+
+### Reproduction
+
+Run `starter/sql/03_uuid_benchmark.sql` in MariaDB 11.8.10.
+
+The script generates the records, loads both tables, verifies row counts and reports their allocated storage.
 ## 7. Overall Results
 
 | Feature | Main benefit demonstrated |
